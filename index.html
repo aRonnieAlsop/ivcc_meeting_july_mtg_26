@@ -1,177 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
-*{
-    box-sizing:border-box;
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap');
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: "Oswald", Arial, sans-serif;
+  overflow: visible;
 }
 
-html,body{
-    margin:0;
-    padding:0;
-    background:transparent;
-    overflow:hidden;
-    font-family:Arial,Helvetica,sans-serif;
+.ivcc-bar {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  background: #070707;
+  border: 1px solid rgba(216,183,106,.8);
+  box-shadow: 0 16px 38px rgba(0,0,0,.35);
 }
 
-.event-card{
-    width:100%;
-    max-width:420px;
-    background:rgba(7,7,7,.92);
-    border:1px solid rgba(216,183,106,.75);
-    box-shadow:0 18px 45px rgba(0,0,0,.35);
-    display:flex;
-    overflow:hidden;
+.ivcc-link {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  transition: .2s ease;
 }
 
-.event-photo{
-    width:112px;
-    height:156px;
-    object-fit:cover;
-    object-position:center bottom;
-    flex-shrink:0;
-    margin-top:18px;
+.ivcc-link:hover {
+  background: #111;
+  color: #d8b76a;
 }
 
-.content{
-    flex:1;
-    padding:16px;
-    display:flex;
-    flex-direction:column;
+.meeting {
+  width: 58%;
+  padding: 12px 24px;
+  gap: 16px;
+  border-right: 1px solid rgba(216,183,106,.55);
+  position: relative;
 }
 
-.kicker{
-    color:#d8b76a;
-    text-transform:uppercase;
-    letter-spacing:.14em;
-    font-size:11px;
-    font-weight:bold;
-    margin-bottom:5px;
+.gold {
+  width: 42%;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 28px;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: .05em;
+  font-weight: 700;
 }
 
-.title{
-    margin:0 0 10px;
-    color:#ffffff;
-    font-size:32px;
-    line-height:.92;
-    text-transform:uppercase;
-    font-weight:800;
+.logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  background: #fff;
+  padding: 3px;
+  flex-shrink: 0;
 }
 
-.details{
-    color:#f7f2e8;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    font-size:12px;
-    line-height:1.45;
-    font-weight:bold;
+.meeting-copy {
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
-.bottom{
-    margin-top:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding-top:16px;
+.meeting-title {
+  font-size: 23px;
+  line-height: 1;
+  letter-spacing: .045em;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.logo{
-    width:68px;
-    height:auto;
-    background:#ffffff;
-    padding:5px;
-    margin-left:12px;
-    margin-top:-8px;
-    box-shadow:0 4px 10px rgba(0,0,0,.25);
+.meeting-sub {
+  margin-top: 5px;
+  color: #d8b76a;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: .16em;
+  font-weight: 700;
 }
 
-.agenda{
-    color:#d8b76a;
-    text-decoration:none;
-    text-transform:uppercase;
-    letter-spacing:.08em;
-    font-size:11px;
-    font-weight:bold;
-    border-bottom:1px solid rgba(216,183,106,.7);
-    transition:.25s;
+.meeting-meta {
+  margin-left: auto;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 1;
+  letter-spacing: .1em;
+  white-space: nowrap;
+  font-weight: 700;
+  transition: color .2s ease;
 }
 
-.agenda:hover{
-    color:#ffffff;
-    border-color:#ffffff;
+.meeting-meta span {
+  color: #d8b76a;
+  transition: color .2s ease;
 }
 
-@media(max-width:420px){
-
-.event-card{
-    max-width:100%;
+.meeting:hover .meeting-meta span {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.event-photo{
-    width:95px;
-    height:150px;
+.tooltip {
+  position: absolute;
+  left: 22px;
+  top: calc(100% + 8px);
+  width: 260px;
+  background: #070707;
+  color: #fff;
+  border: 1px solid rgba(216,183,106,.8);
+  padding: 14px 16px;
+  box-shadow: 0 14px 35px rgba(0,0,0,.38);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: .2s ease;
+  pointer-events: none;
+  z-index: 20;
 }
 
-.title{
-    font-size:28px;
+.meeting:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }
 
-.details{
-    font-size:11px;
+.tooltip-label {
+  color: #d8b76a;
+  font-size: 11px;
+  letter-spacing: .14em;
+  margin-bottom: 7px;
 }
 
-.logo{
-    width:58px;
-    margin-left:8px;
+.tooltip-text {
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: .05em;
 }
 
+@media (max-width: 980px) {
+  .meeting {
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 6px;
+  }
+
+  .meeting-copy {
+    flex: 1 1 calc(100% - 50px);
+  }
+
+  .meeting-meta {
+    width: 100%;
+    margin-left: 50px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 780px) {
+  .ivcc-bar {
+    max-width: 440px;
+    flex-direction: column;
+  }
+
+  .ivcc-link {
+    width: 100%;
+    min-height: 66px;
+  }
+
+  .meeting {
+    border-right: none;
+    border-bottom: 1px solid rgba(216,183,106,.55);
+    padding: 12px 16px;
+  }
+
+  .gold {
+    font-size: 25px;
+    padding: 14px 18px;
+  }
+
+  .meeting-title {
+    font-size: 23px;
+  }
+
+  .meeting-meta {
+    margin-left: 46px;
+    font-size: 13px;
+  }
+
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 420px) {
+  .meeting {
+    gap: 10px;
+  }
+
+  .meeting-title {
+    font-size: 20px;
+  }
+
+  .meeting-sub {
+    font-size: 10px;
+  }
+
+  .meeting-meta {
+    margin-left: 40px;
+    font-size: 11px;
+  }
+
+  .gold {
+    font-size: 22px;
+  }
 }
 </style>
-
 </head>
 
 <body>
 
-<div class="event-card">
+<div class="ivcc-bar">
 
-    <img src="board.jpg" class="event-photo" alt="IVCC Board Meeting">
+  <a class="ivcc-link meeting"
+     href="https://indianvalleychamber.org/wp-content/uploads/2026/07/7.13.2026-IVCC-Agenda-1.pdf"
+     target="_blank">
 
-    <div class="content">
+    <img src="logo.jpg" class="logo" alt="The Valley Grind logo">
 
-        <div>
-
-            <div class="kicker">
-                Indian Valley Chamber
-            </div>
-
-            <div class="title">
-                Meeting
-            </div>
-
-            <div class="details">
-                Monday<br>
-                July 13<br>
-                6:00 PM<br>
-                The Valley Grind
-            </div>
-
-        </div>
-
-        <div class="bottom">
-
-            <a
-                class="agenda"
-                href="https://indianvalleychamber.org/wp-content/uploads/2026/07/7.13.2026-IVCC-Agenda-1.pdf"
-                target="_blank">
-                View Agenda ↗
-            </a>
-
-        </div>
-
+    <div class="meeting-copy">
+      <div class="meeting-title">Meet the New Board</div>
+      <div class="meeting-sub">Chamber Meeting</div>
     </div>
+
+    <div class="meeting-meta">
+      07 13 26 <span>| Agenda</span>
+    </div>
+
+    <div class="tooltip">
+      <div class="tooltip-label">Meeting Details</div>
+      <div class="tooltip-text">
+        Monday, July 13<br>
+        6:00 PM<br>
+        The Valley Grind
+      </div>
+    </div>
+
+  </a>
+
+  <a class="ivcc-link gold"
+     href="https://indianvalleychamber.org/gold-diggers-2026/"
+     target="_blank">
+    Gold Diggers 2026 Info
+  </a>
 
 </div>
 
